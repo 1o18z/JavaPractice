@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54c78de2-9ecb-4228-a491-9aef53599fe8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="54c78de2-9ecb-4228-a491-9aef53599fe8" name="Changes" comment="학생 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/javapractice/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/javapractice/Main.java" afterDir="false" />
     </list>
@@ -66,6 +65,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/park-eunji/Desktop/JavaPractice",
     "node.js.detected.package.eslint": "true",
@@ -87,8 +87,16 @@
       <option name="presentableId" value="Default" />
       <updated>1676900870952</updated>
       <workItem from="1676900875250" duration="448000" />
-      <workItem from="1676902562370" duration="21423000" />
+      <workItem from="1676902562370" duration="24917000" />
     </task>
+    <task id="LOCAL-00001" summary="학생 추가">
+      <created>1676962156402</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676962156402</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,5 +112,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="학생 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="학생 추가" />
   </component>
 </project>
