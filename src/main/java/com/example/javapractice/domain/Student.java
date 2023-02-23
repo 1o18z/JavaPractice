@@ -1,5 +1,3 @@
-package com.example.javapractice.domain;
-
 public class Student {
 	private String name;
 	private int number;
@@ -9,10 +7,10 @@ public class Student {
 		this.number = number;
 	}
 
-	public String putName(String name){
-		return this.name;
+	public String getName() {
+		return name;
 	}
-	public int getNum() {
-		return this.number;
+	public int getNumber() {
+		return number;
 	}
 }
