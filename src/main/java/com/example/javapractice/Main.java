@@ -1,111 +1,109 @@
 package com.example.javapractice;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class Main {
-  public static void main(String[] args) throws IOException {
+import com.example.javapractice.domain.ClassRoom;
+import com.example.javapractice.domain.Student;
 
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-    ArrayList<Student> stdArr = new ArrayList<>();
-    ArrayList<Classroom> classArr = new ArrayList<>();
-    HashMap map = new HashMap();  // 키 | 값  - 여기에 반 | 학생 담을거
+public class Main2 {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    Map<Integer, ClassRoom> map = new HashMap<>();
+//    Map<String, String> stdMap = new HashMap<>();
 
     while (true) {
+      System.out.println("1 : 반 추가 | 2 : 학생 추가 | 3 : 학생 출력 | 4 : 학생 이동 | 5 : 반 삭제 | 0 : 종료");
+      int keyword = sc.nextInt();
 
-      System.out.println(" ☀︎ 1 : 교실 추가 \n ☀︎ 2 : 학생 추가 \n ☀︎ 3 : 학생 목록 \n ☀︎ 0 : 종료");
-      int N = Integer.parseInt(br.readLine());
-
-      if (N == 1) {
-        System.out.println("교실을 입력하세요");
-        String room = br.readLine();
-        Classroom classroom = new Classroom(room);
-
-        classArr.add(classroom);
-        System.out.println("교실이 추가되었습니다");
+      /*
+      교실 추가
+       */
+      if (keyword == 1) {
+        System.out.println("반을 입력하세요");
+        int roomNumber = sc.nextInt();
+        map.put(roomNumber, new ClassRoom());
       }
 
-      if (N == 2) {
-        if (classArr.size() == 0) {
-          System.out.println("교실을 먼저 추가하세요❗️");
+      /*
+      학생 추가
+       */
+      if (keyword == 2) {
+        System.out.println("추가할 반을 선택하세요");
+        for (Integer number : map.keySet()) {
+          System.out.println(number);
         }
-        if (classArr.size() == 1) {
-          System.out.println("학생 이름을 입력하세요");
-          String name = br.readLine();
-          System.out.println("학생 전화번호를 입력하세요");
-          String number = br.readLine();
+        int roomNumber = sc.nextInt();
 
-          Student student = new Student(name, number);
-          stdArr.add(student);
-          System.out.println("학생이 추가되었습니다");
-        }
-        if (classArr.size() > 1) {
-          System.out.println("학생을 추가할 교실을 선택하세요");
+        System.out.println("학생의 이름과 번호를 입력하세요");
+        String name = sc.next();
+        int phone = sc.nextInt();
 
-          for (Classroom i : classArr) {
-            System.out.println(i);
-          }
-        }
-
+        ClassRoom classRoom = map.get(roomNumber);
+        classRoom.putStudent(name, new Student(name, phone));
       }
 
-      if (N == 3) {
-        if (classArr.size() == 0) {  // 교실 없으면 추가
-          System.out.println("교실을 먼저 추가하세요❗️");
-        } else {   // 교실 있는데
-          if (stdArr.size() == 0) {  // 학생 없으면 추가
-            System.out.println("학생을 먼저 추가하세요❕");
-          } else {
-            if (classArr.size() == 1) {
-              System.out.println(stdArr);
-            }
-            if (classArr.size() > 1) {
-              System.out.println("학생 목록을 볼 교실을 선택하세요");
+      /*
+      학생 목록
+       */
+      if (keyword == 3) {
+        System.out.println("목록을 볼 반을 선택하세요");
+        for (Integer number : map.keySet()) {
+          System.out.println(number);
+        }
+        int roomNumber = sc.nextInt();
+        ClassRoom classRoom = map.get(roomNumber);
 
-              for (Classroom i : classArr) {
-                System.out.println(i);
-              }
-
-              int idxClass = Integer.parseInt(br.readLine());
-
-            }
-          }
+        System.out.println("1 : 이름 | 2 : 이름, 번호");
+        int showStdInfo = sc.nextInt();
+        if(showStdInfo == 1){
+          classRoom.showName();
+        }
+        if(showStdInfo == 2){
+          classRoom.showInfo();
         }
       }
-        if (N == 0) {
-          break;
+
+      /*
+      학생 반 이동
+       */
+      if (keyword == 4) {
+        System.out.println("이동할 학생의 현재 반을 선택하세요 ");
+
+        for (Integer number : map.keySet()) {
+          System.out.println(number);
         }
+        int roomNumber = sc.nextInt();
+        System.out.println("이동할 학생을 선택하세요");
+        ClassRoom classRoom = map.get(roomNumber);
+        classRoom.showName();
+
+        String stdName = sc.next();
+
+        System.out.println("이동 원하는 반을 선택하세요 ");
+
+        for (Integer number : map.keySet()) {
+          System.out.println(number);
+        }
+        int roomMove = sc.nextInt();
+        ClassRoom moveClassRoom = map.get(roomMove);
+        moveClassRoom.putStudent(stdName, new Student(stdName, classRoom.getNum(stdName)));
+
+        classRoom.removeStd(stdName);
       }
+      if(keyword == 5){
+        System.out.println("삭제할 반을 선택하세요");
+
+        for(Integer number : map.keySet()){
+          System.out.println(number);
+        }
+        int roomNumber = sc.nextInt();
+        ClassRoom classRoom = map.remove(roomNumber);
+        System.out.println("반이 삭제되었습니다");
+      }
+
+      if (keyword == 0) break;
     }
   }
-
-  class Student {
-    String name = "이름";
-    String number = "전화번호";
-
-    Student(String name, String number) {
-      this.name = name;
-      this.number = number;
-    }
-
-    public void AddStudent() {
-
-    }
-  }
-
-  class Classroom {
-    String room;
-
-    Classroom(String room) {
-      this.room = room;
-    }
-
-    void show() {
-      System.out.println(room);
-    }
-  }
-
+}
