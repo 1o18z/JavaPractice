@@ -1,9 +1,8 @@
 package com.example.jvp;
 
-import java.util.*;
+package com.example.jvp;
 
-import com.example.jvp.ClassRoom;
-import com.example.jvp.Student;
+import java.util.*;
 
 public class Main {
   public static void main(String[] args) {
@@ -12,7 +11,7 @@ public class Main {
 
 
     while (true) {
-      System.out.println("******************* \n 1 : 학교 추가 \n 2 : 반 추가 \n 3 : 학생 출력 \n 4 : 학생 이동 \n 5 : 반 삭제 \n 0 : 종료 \n *******************");
+      System.out.println("******************* \n 1 : 학교 추가 \n 2 : 반 추가 \n 3 : 학생 추가 \n 4 : 학생들 정보 출력 \n 5 : 퇴학 \n 0 : 종료 \n *******************");
       int keyword = sc.nextInt();
 
       /*
@@ -20,119 +19,110 @@ public class Main {
        */
       if (keyword == 1) {
         System.out.println("학교명을 입력하세요");
-        String schoolName = sc.next();  // 토평
+        String schoolName = sc.next();  // 구리
 
-        School school = new School();
-        school.putSchool(schoolName, new ClassRoom());
+        School school = new School(schoolName);
         schools.add(school);
-
-        school.getSchoolName();
-        for (School sch : schools) {
-          System.out.println(schools.indexOf(sch) + " : " + sch.getName());
-        }
       }
-
       /*
       반 추가
       */
       if (keyword == 2) {
-        System.out.println("학교를 입력하고 반을 추가하세요");
+        System.out.println("학교를 선택하세요");
 
-        for (School sch : schools) {
-          System.out.println(schools.indexOf(sch) + " : " + sch.getName());
+        for (int i = 0; i < schools.size(); i++) {
+          School school = schools.get(i);
+          System.out.println(i + " : " + school.getName());
         }
 
-        String schoolName = sc.next();
-        System.out.println(schoolName + "에 추가할 반을 입력하세요");
 
-        School school = new School();
-        int classNumber = sc.nextInt();
+        int schoolNumber = sc.nextInt();
+        School school = schools.get(schoolNumber);
 
-        EachClassRoom eachClassRoom = new EachClassRoom();
-        eachClassRoom.putEachClass(classNumber, new Student());  // 여기가 문제구나
-        System.out.println("반은 추가돼써");
-        ClassRoom classroom = school.getClasses().get(schoolName);
-        classroom.putClass(eachClassRoom);
+        System.out.println("추가할 반을 입력하세요");
+        String classRoomName = sc.next();
+        school.putClassRoom(classRoomName, new ClassRoom());
 
-//        System.out.println(new ClassRoom().getStudents());
+        school.getAllClass();
+      }
+      /*
+      학생 추가
+       */
+      if (keyword == 3) {
+        System.out.println("학교를 선택하세요");
+
+        for (int i = 0; i < schools.size(); i++) {
+          School school = schools.get(i);
+          System.out.println(i + " : " + school.getName());
+        }
+        int schoolNumber = sc.nextInt();
+        School school = schools.get(schoolNumber);
+
+        System.out.println("학생을 추가할 반을 입력하세요");
+        school.getAllClass();
+        String className = sc.next();
+
+        ClassRoom classRoom = school.getClasses().get(className);
+
+        System.out.println("학생의 이름을 입력하세요");
+        String studentName = sc.next();
+        System.out.println("생일을 입력하세요 (ex. 2월13일 )");
+        String studentBirth = sc.next();
+        System.out.println("성별을 입력하세요 (ex. 남 / 여 )");
+        String studentGender = sc.next();
+        System.out.println("키를 입력하세요 (ex. 150 )");
+        int studentHeight = sc.nextInt();
+        System.out.println("몸무게를 입력하세요 (ex. 50 )");
+        int studentWeight = sc.nextInt();
+        classRoom.putStudent(studentName, new Student(studentName, studentBirth, studentGender, studentHeight, studentWeight));
+
+        System.out.println("학생이 추가되었습니다");
+        classRoom.getStudentName();
+
+      }
+      /*
+      학생 출력
+       */
+      if (keyword == 4) {
+        System.out.println("학교를 선택하세요");
+        for (int i = 0; i < schools.size(); i++) {
+          School school = schools.get(i);
+          System.out.println(i + " : " + school.getName());
+        }
+        int schoolNumber = sc.nextInt();
+        School school = schools.get(schoolNumber);
+
+        System.out.println("학생 목록을 볼 반을 입력하세요");
+        school.getAllClass();
+        String className = sc.next();
+
+        ClassRoom classRoom = school.getClasses().get(className);
+        classRoom.getInfo();
+      }
+      /*
+      퇴학
+       */
+      if (keyword == 5) {
+        System.out.println("학교를 선택하세요");
+        for (int i = 0; i < schools.size(); i++) {
+          School school = schools.get(i);
+          System.out.println(i + " : " + school.getName());
+        }
+        int schoolNumber = sc.nextInt();
+        School school = schools.get(schoolNumber);
+
+        System.out.println("반을 선택하세요");
+        school.getAllClass();
+        String className = sc.next();
+
+        ClassRoom classRoom = school.getClasses().get(className);
+        System.out.println("퇴학시킬 학생을 선택하세요");
+        String studentName = sc.next();
+        classRoom.removeStudent(studentName);
+
 
       }
       if (keyword == 0) break;
-    }
-  }
-}
-
-public class ClassRoom {
-  private List<EachClassRoom> students;
-
-  public List<EachClassRoom> getStudents() {
-    return students;
-  }
-  public ClassRoom() {}
-
-  public ClassRoom(List<EachClassRoom> students) {
-    this.students = students;
-  }
-  public void putClass(EachClassRoom eachClass){
-    this.students.add(eachClass);
-  }
-}
-
-public class EachClassRoom {
-  private Map<Integer, Student> eachClass;
-
-  public Map<Integer, Student> getEachClass() {
-    return eachClass;
-  }
-
-  public EachClassRoom(){}
-
-  public EachClassRoom(Map<Integer, Student> eachClass) {
-    this.eachClass = eachClass;
-  }
-
-  public void putEachClass(int classNumber, Student student){
-
-    this.eachClass.put(classNumber, student);
-  }
-}
-
-public class Student {
-
-  private Map<String, Integer> std;
-
-  public Map<String, Integer> getStd() {
-    return std;
-  }
-
-  public Student (){}
-  public Student(Map<String, Integer> std) {
-    this.std = std;
-  }
-}
-
-public class School {
-  private Map<String, ClassRoom> classes;
-
-  public Map<String, ClassRoom> getClasses() {
-    return this.classes;
-  }
-
-  public School() {
-    this.classes = new HashMap<>();
-  }
-
-  public Set<String> getName() {
-    return classes.keySet();
-  }
-
-  public void putSchool(String schoolName, ClassRoom classroom) {
-    this.classes.put(schoolName, classroom);
-  }
-
-  public void getSchoolName() {
-    for (String sch : classes.keySet()) {
-      System.out.println(sch);
     }
   }
 }
